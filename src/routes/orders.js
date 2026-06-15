@@ -37,16 +37,15 @@ router.post("/", (req, res) => {
 
   const total = orderItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
 
-  const order = {
-    id: data.nextOrderId++,
-    userId: user.id,
-    userName: user.name,
-    items: orderItems,
-    total: Math.round(total * 100) / 100,
-    // BUG: staatus peaks olema "vastu võetud" mitte "pending"
-    status: "pending",
-    createdAt: new Date().toISOString(),
-  };
+const order = {
+  id: data.nextOrderId++,
+  userId: user.id,
+  userName: user.name,
+  items: orderItems,
+  total: Math.round(total * 100) / 100,
+  status: "vastu võetud",
+  createdAt: new Date().toISOString(),
+};
 
   data.orders.push(order);
   res.status(201).json({ message: "Tellimus loodud!", order });
