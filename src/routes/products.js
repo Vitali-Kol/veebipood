@@ -24,10 +24,19 @@ router.get("/category/:cat", (req, res) => {
 // GET /api/products/search
 router.get("/search", (req, res) => {
   const { name } = req.query;
-  if (!name) return res.status(400).json({ error: "Lisa parameeter ?name=..." });
-  // BUG: peaks olema data.products mitte data.items
-  const results = data.items.filter((p) => p.name.toLowerCase().includes(name.toLowerCase()));
-  res.json({ results, count: results.length });
+
+  if (!name) {
+    return res.status(400).json({ error: "Lisa parameeter ?name=..." });
+  }
+
+  const results = data.products.filter((p) =>
+    p.name.toLowerCase().includes(name.toLowerCase())
+  );
+
+  res.json({
+    results,
+    count: results.length
+  });
 });
 
 // GET /api/products/:id
