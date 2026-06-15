@@ -130,3 +130,50 @@ Automaatne töövoog:
 5. Kontrollitakse, et kõik testid läbiksid edukalt.
 
 See aitab tagada koodi kvaliteedi ning avastada vead enne muudatuste ühendamist põhiharusse.
+
+## Arhitektuuri analüüs
+
+### Millist arhitektuuri rakendus kasutab?
+
+Rakendus kasutab **monoliitset klient-server arhitektuuri**.
+
+See tähendab, et kogu serveri loogika töötab ühes Node.js rakenduses ning klient saadab serverile päringuid API kaudu.
+
+### Mille põhjal sellisele järeldusele jõudsin?
+
+Seda on näha projekti struktuurist.
+
+* `server.js` käivitab kogu rakenduse.
+* Kaustas `routes` on erinevad API osad (kasutajad, tooted, tellimused).
+* Kõik andmed asuvad ühes failis `data.js`.
+* Kõik osad töötavad koos ühes rakenduses.
+
+Rakendus ei ole jagatud eraldi teenusteks, seega on tegemist monoliitse lahendusega.
+
+### Miks on see arhitektuur siin hea valik?
+
+See projekt on suhteliselt väike ja lihtne.
+
+Monoliitset rakendust on:
+
+* lihtne arendada;
+* lihtne testida;
+* lihtne käivitada;
+* lihtne parandada, kui tekivad vead.
+
+Õppeprojekti jaoks on see kõige mugavam lahendus.
+
+### Millist arhitektuuri kasutaksin siis, kui rakendusel oleks 1 miljon kasutajat?
+
+Sellisel juhul kasutaksin **mikroteenuste arhitektuuri**.
+
+Näiteks oleks eraldi teenused:
+
+* kasutajate jaoks;
+* toodete jaoks;
+* tellimuste jaoks.
+
+Nii saaks iga teenust eraldi uuendada ja vajadusel rohkem servereid lisada.
+
+See muudaks süsteemi kiiremaks, töökindlamaks ja paremini skaleeritavaks suure kasutajate arvu korral.
+
